@@ -23,7 +23,7 @@ const session5 = driver.session()
 app.get('/search', function(req, res) {
     let myObj = {};
     session1
-        .run("MATCH (p:person)-[rel:WIFE_TO]-(connected) WHERE p.EPIC_x='"+String(req.query.keyword)+"' RETURN connected.EPIC_x")
+        .run("MATCH (p:person)-[rel:WIFE_TO]->(connected) WHERE p.EPIC_x='"+String(req.query.keyword)+"' RETURN connected.EPIC_x")
         .then((result)=>{
             if(result!=undefined && result.records.length!=0){
                 myObj= Object.assign(myObj,{'HUSBAND':result.records[0]._fields[0]});
@@ -31,7 +31,7 @@ app.get('/search', function(req, res) {
             console.log(myObj);
 
             session2
-                .run("MATCH (p:person)-[rel:HUSBAND_TO]-(connected) WHERE p.EPIC_x='"+String(req.query.keyword)+"' RETURN connected.EPIC_x")
+                .run("MATCH (p:person)-[rel:HUSBAND_TO]->(connected) WHERE p.EPIC_x='"+String(req.query.keyword)+"' RETURN connected.EPIC_x")
                 .then((result)=>{
                     if(result!=undefined && result.records.length!=0){
                         myObj= Object.assign(myObj,{'WIFE':result.records[0]._fields[0]});
@@ -39,7 +39,7 @@ app.get('/search', function(req, res) {
                     console.log(myObj);
 
                     session3
-                        .run("MATCH (p:person)-[rel:FATHER_TO]-(connected) WHERE p.EPIC_x='"+String(req.query.keyword)+"' RETURN connected.EPIC_x")
+                        .run("MATCH (p:person)-[rel:FATHER_TO]->(connected) WHERE p.EPIC_x='"+String(req.query.keyword)+"' RETURN connected.EPIC_x")
                         .then((result)=>{
                             console.log(result);
                             if(result!=undefined && result.records.length!=0){
@@ -49,7 +49,7 @@ app.get('/search', function(req, res) {
                             console.log(myObj);
 
                             session4
-                                .run("MATCH (p:person)-[rel:OFFSPRING_TO]-(connected) WHERE p.EPIC_x='"+String(req.query.keyword)+"' RETURN connected.EPIC_x")
+                                .run("MATCH (p:person)-[rel:OFFSPRING_TO]->(connected) WHERE p.EPIC_x='"+String(req.query.keyword)+"' RETURN connected.EPIC_x")
                                 .then((result)=>{
                                     if(result!=undefined && result.records.length!=0){
                                         myObj= Object.assign(myObj,{'FATHER':result.records[0]._fields[0]});
@@ -57,7 +57,7 @@ app.get('/search', function(req, res) {
                                     console.log(myObj);
 
                                     session5
-                                        .run("MATCH (p:person)-[rel:SIBLING_TO]-(connected) WHERE p.EPIC_x='"+String(req.query.keyword)+"' RETURN connected.EPIC_x")
+                                        .run("MATCH (p:person)-[rel:SIBLING_TO]->(connected) WHERE p.EPIC_x='"+String(req.query.keyword)+"' RETURN connected.EPIC_x")
                                         .then((result)=>{
                                             if(result!=undefined && result.records.length!=0){
                                                 myObj= Object.assign(myObj,{'SIBLING':result.records[0]._fields[0]});
